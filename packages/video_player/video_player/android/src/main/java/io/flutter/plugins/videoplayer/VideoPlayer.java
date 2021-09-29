@@ -70,7 +70,14 @@ final class VideoPlayer {
     this.textureEntry = textureEntry;
     this.options = options;
 
-    exoPlayer = new SimpleExoPlayer.Builder(context).build();
+    DefaultLoadControl.Builder builder = new DefaultLoadControl.Builder();
+    builder.setBufferDurationsMs(100, 1500, 100, 100);
+    Log.setLogLevel(Log.LOG_LEVEL_OFF);
+    DefaultLoadControl loadControl = builder.build();
+    exoPlayer = new SimpleExoPlayer
+            .Builder(context)
+            .setLoadControl(loadControl)
+            .build();
 
     Uri uri = Uri.parse(dataSource);
 
